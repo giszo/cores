@@ -529,10 +529,10 @@ void uart0_status_isr(void)
 			} while (--avail > 0);
 			rx_buffer_head = head;
 			if (rts_pin) {
-				int avail;
-				if (head >= tail) avail = head - tail;
-				else avail = SERIAL1_RX_BUFFER_SIZE + head - tail;
-				if (avail >= RTS_HIGH_WATERMARK) rts_deassert();
+				int cnt;
+				if (head >= tail) cnt = head - tail;
+				else cnt = SERIAL1_RX_BUFFER_SIZE + head - tail;
+				if (cnt >= RTS_HIGH_WATERMARK) rts_deassert();
 			}
 		}
 	}

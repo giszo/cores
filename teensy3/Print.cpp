@@ -310,7 +310,7 @@ size_t Print::printFloat(double number, uint8_t digits)
 
 	// Print the decimal point, but only if there are digits beyond
 	if (digits > 0) {
-		uint8_t n, buf[16], count=1;
+		uint8_t n, buf[16], cnt=1;
 		buf[0] = '.';
 
 		// Extract digits from the remainder one at a time
@@ -319,10 +319,10 @@ size_t Print::printFloat(double number, uint8_t digits)
 		while (digits-- > 0) {
 			remainder *= 10.0;
 			n = (uint8_t)(remainder);
-			buf[count++] = '0' + n;
+			buf[cnt++] = '0' + n;
 			remainder -= n; 
 		}
-		count += write(buf, count);
+		count += write(buf, cnt);
 	}
 	return count;
 }
