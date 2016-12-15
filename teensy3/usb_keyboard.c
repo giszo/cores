@@ -31,11 +31,11 @@
 #include "usb_dev.h"
 #include "usb_keyboard.h"
 #include "core_pins.h" // for yield()
-#include "keylayouts.h"
 //#include "HardwareSerial.h"
 #include <string.h> // for memcpy()
 
 #ifdef KEYBOARD_INTERFACE // defined by usb_dev.h -> usb_desc.h
+#include "keylayouts.h"
 #if F_CPU >= 20000000
 
 // which modifier keys are currently pressed
