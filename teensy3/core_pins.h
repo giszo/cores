@@ -1840,7 +1840,6 @@ void init_pins(void);
 void analogWrite(uint8_t pin, int val);
 void analogWriteRes(uint32_t bits);
 static inline void analogWriteResolution(uint32_t bits) { analogWriteRes(bits); }
-void analogWriteFrequency(uint8_t pin, float frequency);
 void analogWriteDAC0(int val);
 void analogWriteDAC1(int val);
 #ifdef __cplusplus

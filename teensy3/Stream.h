@@ -43,8 +43,6 @@ class Stream : public Print
 	bool findUntil(const uint8_t *target, size_t targetLen, const char *terminate, size_t termLen) {return findUntil((const char *)target, targetLen, terminate, termLen); }
 	long parseInt();
 	long parseInt(char skipChar);
-	float parseFloat();
-	float parseFloat(char skipChar);
 	size_t readBytes(char *buffer, size_t length);
 	size_t readBytes(uint8_t *buffer, size_t length) { return readBytes((char *)buffer, length); }
 	size_t readBytesUntil(char terminator, char *buffer, size_t length);

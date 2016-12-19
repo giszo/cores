@@ -70,7 +70,6 @@ class Print
 	size_t print(long n, int base)			{ return (base == 10) ? print(n) : printNumber(n, base, 0); }
 	size_t print(unsigned long n, int base)		{ return printNumber(n, base, 0); }
 
-	size_t print(double n, int digits = 2)		{ return printFloat(n, digits); }
 	size_t print(const Printable &obj)		{ return obj.printTo(*this); }
 	size_t println(void);
 	size_t println(char c)				{ return print(c) + println(); }
@@ -89,7 +88,6 @@ class Print
 	size_t println(long n, int base)		{ return print(n, base) + println(); }
 	size_t println(unsigned long n, int base)	{ return print(n, base) + println(); }
 
-	size_t println(double n, int digits = 2)	{ return print(n, digits) + println(); }
 	size_t println(const Printable &obj)		{ return obj.printTo(*this) + println(); }
 	int getWriteError() { return write_error; }
 	void clearWriteError() { setWriteError(0); }
@@ -99,7 +97,6 @@ class Print
 	void setWriteError(int err = 1) { write_error = err; }
   private:
 	char write_error;
-	size_t printFloat(double n, uint8_t digits);
 #ifdef __MKL26Z64__
 	size_t printNumberDec(unsigned long n, uint8_t sign);
 	size_t printNumberHex(unsigned long n);

@@ -28,6 +28,7 @@
  * SOFTWARE.
  */
 
+
 #include "avr_functions.h"
 #include <string.h>
 #include <stdlib.h>
@@ -66,110 +67,3 @@ char * ltoa(long val, char *buf, int radix)
 		return buf;
 	}
 }
-
-#define DTOA_UPPER 0x04
-
-char * fcvtf(float, int, int *, int *);
-int isnanf (float x);
-int isinff (float x);
-
-char * dtostrf(float val, int width, unsigned int precision, char *buf)
-{
-	int decpt, sign, reqd, pad;
-	const char *s, *e;
-	char *p;
-
-	int awidth = abs(width);
-	if (isnanf(val)) {
-		int ndigs = (val<0) ? 4 : 3;
-		awidth = (awidth > ndigs) ? awidth - ndigs : 0;
-		if (width<0) {
-			while (awidth) {
-				*buf++ = ' ';
-				awidth--;
-			}
-		}
-		if (copysignf(1.0f, val)<0) *buf++ = '-';
-		if (DTOA_UPPER) {
-			*buf++ = 'N';  *buf++ = 'A';  *buf++ = 'N';
-		} else {
-			*buf++ = 'n';  *buf++ = 'a';  *buf++ = 'n';
-		}
-		while (awidth) {
-			*buf++ = ' ';
-			awidth--;
-		}
-		*buf = 0;
-		return buf;
-	}
-	if (isinff(val)) {
-		int ndigs = (val<0) ? 4 : 3;
-		awidth = (awidth > ndigs) ? awidth - ndigs : 0;
-		if (width<0) {
-			while (awidth) {
-				*buf++ = ' ';
-				awidth--;
-			}
-		}
-		if (val<0) *buf++ = '-';
-		if (DTOA_UPPER) {
-			*buf++ = 'I';  *buf++ = 'N';  *buf++ = 'F';
-		} else {
-			*buf++ = 'i';  *buf++ = 'n';  *buf++ = 'f';
-		}
-		while (awidth) {
-			*buf++ = ' ';
-			awidth--;
-		}
-		*buf = 0;
-		return buf;
-	}
-
-	s = fcvtf(val, precision, &decpt, &sign);
-	if (precision == 0 && decpt == 0) {
-		s = (*s < '5') ? "0" : "1";
-		reqd = 1;
-	} else {
-		reqd = strlen(s);
-		if (reqd > decpt) reqd++;
-		if (decpt == 0) reqd++;
-	}
-	if (sign) reqd++;
-	p = buf;
-	e = p + reqd;
-	pad = width - reqd;
-	if (pad > 0) {
-		e += pad;
-		while (pad-- > 0) *p++ = ' ';
-	}
-	if (sign) *p++ = '-';
-	if (decpt == 0 && precision > 0) {
-		*p++ = '0';
-		*p++ = '.';
-	}
-	else if (decpt < 0 && precision > 0) {
-		*p++ = '0';
-		*p++ = '.';
-		e++;
-		while ( decpt < 0 ) {
-			decpt++;
-			*p++ = '0';
-		}
-	}
-	while (p < e) {
-		*p++ = *s++;
-		if (p == e) break;
-		if (--decpt == 0) *p++ = '.';
-	}
-	if (width < 0) {
-		pad = (reqd + width) * -1;
-		while (pad-- > 0) *p++ = ' ';
-	}
-	*p = 0;
-
-	//char format[20];
-	//sprintf(format, "%%%d.%df", width, precision);
-	//sprintf(buf, format, val);
-	return buf;
-}
-
