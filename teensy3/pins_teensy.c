@@ -670,6 +670,7 @@ void _init_Teensyduino_internal_(void)
 #define FTM_PINCFG(pin) FTM_PINCFG2(pin)
 #define FTM_PINCFG2(pin) CORE_PIN ## pin ## _CONFIG
 
+#if 0
 static uint8_t analog_write_res = 8;
 
 // SOPT4 is SIM select clocks?
@@ -906,7 +907,7 @@ void analogWriteRes(uint32_t bits)
 	}
 	analog_write_res = bits;
 }
-
+#endif
 
 // TODO: startup code needs to initialize all pins to GPIO mode, input by default
 
